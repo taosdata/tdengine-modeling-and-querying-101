@@ -54,7 +54,6 @@ TDengine 语句丰富，此处仅对写入、查询做简单示例，详情请�
 INSERT INTO d1001 VALUES (NOW, 10.2, 219, 0.32);
 
 INSERT INTO d1001 VALUES ('2021-07-13 14:06:32.272', 10.2, 219, 0.32) (1626164208000, 10.15, 217, 0.33);
-
 ```
 
 * 写入记录，数据对应到指定的列：
@@ -89,6 +88,7 @@ INSERT INTO d1001 FILE '/tmp/csvfile.csv';
 
 ```
 SELECT * FROM d1001;
+
 SELECT * FROM meters;
 ```
 
@@ -102,6 +102,7 @@ SELECT d1001.* FROM d1001, d1003 WHERE d1001.ts=d1003.ts;
 
 ```
 SELECT count(*) FROM d1001;
+
 SELECT first(*) FROM d1001;
 ```
 
@@ -116,6 +117,7 @@ SELECT last_row(*) FROM meters GROUP BY tbname;
 
 ```
 SELECT DISTINCT location , groupId  FROM meters;
+
 SELECT DISTINCT current , voltage , phase  FROM d1001;
 ```
 
