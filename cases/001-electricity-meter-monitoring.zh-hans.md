@@ -32,6 +32,7 @@ CREATE DATABASE power KEEP 365 DAYS 10 BLOCKS 6 UPDATE 2 CACHELAST 1;
 
 ```
 USE power;
+
 CREATE STABLE meters (ts timestamp, current float, voltage int, phase float) TAGS (location binary(64), groupId int);
 ```
 
