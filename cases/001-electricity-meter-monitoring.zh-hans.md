@@ -63,6 +63,12 @@ INSERT INTO d1001 VALUES ('2021-07-13 14:06:32.272', 10.2, 219, 0.32) (162616420
 INSERT INTO d1001 (ts, current, phase) VALUES ('2021-07-13 14:06:33.196', 10.27, 0.31);
 ```
 
+* 写入记录时自动建表：
+
+```
+INSERT INTO d1002 USING meters TAGS ('Beijing.Chaoyang', 3) VALUES ('2021-07-13 14:06:32.272', 10.2, 219, 0.32);
+```
+
 * 向多个表写入记录：
 
 ```
@@ -70,11 +76,6 @@ INSERT INTO d1001 VALUES ('2021-07-13 14:06:34.630', 10.2, 219, 0.32) ('2021-07-
             d1002 (ts, current, phase) VALUES ('2021-07-13 14:06:34.255', 10.27, 0.31）;
 ```
 
-* 写入记录时自动建表：
-
-```
-INSERT INTO d21001 USING meters TAGS ('Beijing.Chaoyang', 2) VALUES ('2021-07-13 14:06:32.272', 10.2, 219, 0.32);
-```
 
 * 导入来自文件的数据记录，csv 文件不需要表头：
 
