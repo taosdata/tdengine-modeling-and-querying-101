@@ -73,7 +73,7 @@ INSERT INTO d1002 USING meters TAGS ('Beijing.Chaoyang', 3) VALUES ('2021-07-13 
 
 ```
 INSERT INTO d1001 VALUES ('2021-07-13 14:06:34.630', 10.2, 219, 0.32) ('2021-07-13 14:06:35.779', 10.15, 217, 0.33)
-            d1002 (ts, current, phase) VALUES ('2021-07-13 14:06:34.255', 10.27, 0.31）;
+            d1002 (ts, current, phase) VALUES ('2021-07-13 14:06:34.255', 10.27, 0.31);
 ```
 
 
