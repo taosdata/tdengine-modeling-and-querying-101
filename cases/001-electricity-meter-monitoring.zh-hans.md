@@ -22,20 +22,20 @@
 | d1002 | 1538548696650 | 10.3 | 218 | 0.25 | Beijing.Chaoyang	 | 3 |
 
 ## 建模语句
-* 建库。此处将创建一个名为 power 的库，这个库的数据将保留 365 天「超过 365 天将被自动删除」，每 10 天一个数据文件，内存块数为 6，允许更新数据，缓存最新一条记录
+* 建库。此处将创建一个名为 power 的库，这个库的数据将保留 365 天「超过 365 天将被自动删除」，每 10 天一个数据文件，内存块数为 6，允许更新数据，缓存最新一条记录：
 
 ```
 CREATE DATABASE power KEEP 365 DAYS 10 BLOCKS 6 UPDATE 2 CACHELAST 1;
 ```
 
-* 建超级表。与创建普通表类似，创建表时，需要提供表名「此处为 meters 」、数据列的定义。第一列必须为时间戳「此处为 ts 」，其他列为采集的物理量，除此之外，还需要提供标签列的定义 「此处为 location , groupId 」
+* 建超级表。与创建普通表类似，创建表时，需要提供表名「此处为 meters 」、数据列的定义。第一列必须为时间戳「此处为 ts 」，其他列为采集的物理量，除此之外，还需要提供标签列的定义 「此处为 location , groupId 」：
 
 ```
 USE power;
 CREATE STABLE meters (ts timestamp, current float, voltage int, phase float) TAGS (location binary(64), groupId int);
 ```
 
-* 建子表。TDengine 对每个数据采集点需要独立建表，创建时，需要使用超级表做模板，同时指定标签的具体值。后续会介绍在写入数据时使用自动建表语句来创建不存在的表
+* 建子表。TDengine 对每个数据采集点需要独立建表，创建时，需要使用超级表做模板，同时指定标签的具体值。后续会介绍在写入数据时使用自动建表语句来创建不存在的表：
 
 ```
 CREATE TABLE d1001 USING meters TAGS ("Beijing.Chaoyang", 2);
@@ -48,7 +48,7 @@ TDengine 语句丰富，此处仅对写入、查询做简单示例，详情请�
 若想直接获取电表监控的测试数据集，可以使用官方压测工具 [taosBenchmark](https://www.taosdata.com/docs/cn/v2.0/getting-started/taosdemo) 生成测试数据，默认数据库名为 test 。
 ## 数据写入
 
-* 向一个表写入一条或多条记录
+* 向一个表写入一条或多条记录：
 
 ```
 INSERT INTO d1001 VALUES (NOW, 10.2, 219, 0.32);
@@ -57,26 +57,26 @@ INSERT INTO d1001 VALUES ('2021-07-13 14:06:32.272', 10.2, 219, 0.32) (162616420
 
 ```
 
-* 写入记录，数据对应到指定的列
+* 写入记录，数据对应到指定的列：
 
 ```
 INSERT INTO d1001 (ts, current, phase) VALUES ('2021-07-13 14:06:33.196', 10.27, 0.31);
 ```
 
-* 向多个表写入记录
+* 向多个表写入记录：
 
 ```
 INSERT INTO d1001 VALUES ('2021-07-13 14:06:34.630', 10.2, 219, 0.32) ('2021-07-13 14:06:35.779', 10.15, 217, 0.33)
             d1002 (ts, current, phase) VALUES ('2021-07-13 14:06:34.255', 10.27, 0.31）;
 ```
 
-* 写入记录时自动建表
+* 写入记录时自动建表：
 
 ```
 INSERT INTO d21001 USING meters TAGS ('Beijing.Chaoyang', 2) VALUES ('2021-07-13 14:06:32.272', 10.2, 219, 0.32);
 ```
 
-* 导入来自文件的数据记录，csv 文件不需要表头
+* 导入来自文件的数据记录，csv 文件不需要表头：
 
 ```
 INSERT INTO d1001 FILE '/tmp/csvfile.csv';
@@ -85,20 +85,20 @@ INSERT INTO d1001 FILE '/tmp/csvfile.csv';
 
 ## 业务查询
 
-* 对子表、超级表进行全量查询，使用通配符 * 查询超级表会额外展示标签列
+* 对子表、超级表进行全量查询，使用通配符 * 查询超级表会额外展示标签列：
 
 ```
 SELECT * FROM d1001;
 SELECT * FROM meters;
 ```
 
-* 关联查询，若有带表的通配符，则只返回该表的列数据。普通表之间的 JOIN 操作，只能使用主键时间戳来关联，超级表之间的 JOIN ，还可以使用对应的标签列
+* 关联查询，若有带表的通配符，则只返回该表的列数据。普通表之间的 JOIN 操作，只能使用主键时间戳来关联，超级表之间的 JOIN ，还可以使用对应的标签列：
 
 ```
 SELECT d1001.* FROM d1001, d1003 WHERE d1001.ts=d1003.ts;
 ```
 
-* 函数查询，count(*) 函数只返回一列，first 、last 、last_row 函数返回全部列
+* 函数查询，count(*) 函数只返回一列，first 、last 、last_row 函数返回全部列：
 
 ```
 SELECT count(*) FROM d1001;
@@ -106,13 +106,13 @@ SELECT first(*) FROM d1001;
 ```
 
 
-* 查询超级表中所有子表的最新一条记录
+* 查询超级表中所有子表的最新一条记录：
 
 ```
 SELECT last_row(*) FROM meters GROUP BY tbname;
 ```
 
-* 标签列或普通列去重查询，支持输出不重复的组合
+* 标签列或普通列去重查询，支持输出不重复的组合：
 
 ```
 SELECT DISTINCT location , groupId  FROM meters;
