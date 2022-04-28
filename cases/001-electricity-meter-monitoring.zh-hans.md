@@ -119,7 +119,7 @@ SELECT DISTINCT location , groupId  FROM meters;
 SELECT DISTINCT current , voltage , phase  FROM d1001;
 ```
 
-# 数据展现
+# 数据展示
 TDengine 服务启动后会自动创建一个监测数据库 log ，包含对服务器的一系列监控数据，通过 Grafana 和 TDengine 数据源插件，构成了数据库监控、可视化解决方案 TDinsight 。
 
 详细介绍与部署操作请移步：[TDinsight - 基于Grafana的TDengine零依赖监控解决方案](https://www.taosdata.com/docs/cn/v2.0/tools/insight)
