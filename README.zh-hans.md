@@ -12,4 +12,4 @@
 
 [English](README.md) | 简体中文
 
-[001 - 电表监控](cases/001-001-electricity-meter-monitoring.zh-hans.md)
+[001 - 电表监控](cases/001-electricity-meter-monitoring.zh-hans.md)
