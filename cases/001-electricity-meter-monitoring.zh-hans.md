@@ -42,11 +42,24 @@ CREATE STABLE meters (ts timestamp, current float, voltage int, phase float) TAG
 CREATE TABLE d1001 USING meters TAGS ("Beijing.Chaoyang", 2);
 ```
 
+* 更改标签值。有时因为需求、设备变更需要更改子表标签值：
+
+```
+ALTER TABLE d1001 SET TAG  groupid = 1;
+```
+
+* 查看超级表、子表结构。执行后可以看到子表继承了其超级表的结构：
+
+```
+describe meters;
+
+describe d1001;
+```
 
 # 写入与查询
-TDengine 语句丰富，此处仅对写入、查询做简单示例，详情请查看官方文档：[数据写入](https://www.taosdata.com/docs/cn/v2.0/taos-sql#insert)	、 [数据查询](https://www.taosdata.com/docs/cn/v2.0/taos-sql#select) 。
+TDengine 语句丰富，此处仅对写入、查询做简单示例，详情请查看官方文档：[数据写入](https://docs.taosdata.com/taos-sql/insert)	、 [数据查询](https://docs.taosdata.com/taos-sql/select) 。
 
-若想直接获取电表监控的测试数据集，可以使用官方压测工具 [taosBenchmark](https://www.taosdata.com/docs/cn/v2.0/getting-started/taosdemo) 生成测试数据，默认数据库名为 test 。
+若想直接获取电表监控的测试数据集，可以使用官方压测工具 [taosBenchmark](https://docs.taosdata.com/reference/taosbenchmark) 生成测试数据，默认数据库名为 test 。
 ## 数据写入
 
 * 向一个表写入一条或多条记录：
@@ -86,7 +99,7 @@ INSERT INTO d1001 FILE '/tmp/csvfile.csv';
 
 ## 业务查询
 
-* 对子表、超级表进行全量查询，使用通配符 * 查询超级表会额外展示标签列：
+* 对子表、超级表进行全量查询，使用通配符 * 查询超级表所有列会额外展示标签列：
 
 ```
 SELECT * FROM d1001;
@@ -100,7 +113,7 @@ SELECT * FROM meters;
 SELECT d1001.* FROM d1001, d1003 WHERE d1001.ts=d1003.ts;
 ```
 
-* 函数查询，count(*) 函数只返回一列，first 、last 、last_row 函数返回全部列：
+* 函数查询，[戳我查看 TDengine 支持的函数](https://docs.taosdata.com/taos-sql/function)。count(*) 函数只返回一列，first 、last 、last_row 函数返回全部列：
 
 ```
 SELECT count(*) FROM d1001;
@@ -126,5 +139,5 @@ SELECT DISTINCT current , voltage , phase  FROM d1001;
 # 数据展示
 TDengine 服务启动后会自动创建一个监测数据库 log ，包含对服务器的一系列监控数据，通过 Grafana 和 TDengine 数据源插件，构成了数据库监控、可视化解决方案 TDinsight 。
 
-详细介绍与部署操作请移步：[TDinsight - 基于Grafana的TDengine零依赖监控解决方案](https://www.taosdata.com/docs/cn/v2.0/tools/insight)
+详细介绍与部署操作请移步：[TDinsight - 基于Grafana的TDengine零依赖监控解决方案](https://docs.taosdata.com/reference/tdinsight/)
 
