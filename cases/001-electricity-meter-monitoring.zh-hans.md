@@ -113,7 +113,7 @@ SELECT * FROM meters;
 SELECT d1001.* FROM d1001, d1003 WHERE d1001.ts=d1003.ts;
 ```
 
-* 函数查询，[戳我查看 TDengine 支持的函数](https://docs.taosdata.com/taos-sql/function)。COUNT(*) 函数只返回一列，FIRST 、LAST 、LAST_ROW 函数返回全部列：
+* 函数查询，[戳我查看 TDengine 支持的函数](https://docs.taosdata.com/taos-sql/function)。COUNT(*) 函数只返回一列， FIRST 、 LAST 、 LAST_ROW 函数返回全部列：
 
 ```
 SELECT COUNT(*) FROM d1001;
