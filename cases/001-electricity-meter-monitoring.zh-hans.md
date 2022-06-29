@@ -51,9 +51,9 @@ ALTER TABLE d1001 SET TAG groupid = 1;
 * 查看超级表、子表结构。执行后可以看到子表继承了其超级表的结构：
 
 ```
-describe meters;
+DESCRIBE meters;
 
-describe d1001;
+DESCRIBE d1001;
 ```
 
 # 写入与查询
@@ -113,19 +113,19 @@ SELECT * FROM meters;
 SELECT d1001.* FROM d1001, d1003 WHERE d1001.ts=d1003.ts;
 ```
 
-* 函数查询，[戳我查看 TDengine 支持的函数](https://docs.taosdata.com/taos-sql/function)。count(*) 函数只返回一列，first 、last 、last_row 函数返回全部列：
+* 函数查询，[戳我查看 TDengine 支持的函数](https://docs.taosdata.com/taos-sql/function)。count(*) 函数只返回一列，FRIST 、LAST 、LAST_ROW 函数返回全部列：
 
 ```
-SELECT count(*) FROM d1001;
+SELECT COUNT(*) FROM d1001;
 
-SELECT first(*) FROM d1001;
+SELECT FIRST(*) FROM d1001;
 ```
 
 
 * 查询超级表中所有子表的最新一条记录：
 
 ```
-SELECT last_row(*) FROM meters GROUP BY tbname;
+SELECT LAST_ROW(*) FROM meters GROUP BY tbname;
 ```
 
 * 标签列或普通列去重查询，支持输出不重复的组合：
@@ -139,5 +139,5 @@ SELECT DISTINCT current , voltage , phase  FROM d1001;
 # 数据展示
 TDengine 服务启动后会自动创建一个监测数据库 log ，包含对服务器的一系列监控数据，通过 Grafana 和 TDengine 数据源插件，构成了数据库监控、可视化解决方案 TDinsight 。
 
-详细介绍与部署操作请移步：[TDinsight - 基于Grafana的TDengine零依赖监控解决方案](https://docs.taosdata.com/reference/tdinsight/)
+详细介绍与部署操作请移步：[TDinsight - 基于 Grafana 的 TDengine 零依赖监控解决方案](https://docs.taosdata.com/reference/tdinsight/)
 
