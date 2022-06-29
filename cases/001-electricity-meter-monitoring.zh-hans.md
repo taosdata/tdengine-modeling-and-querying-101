@@ -45,7 +45,7 @@ CREATE TABLE d1001 USING meters TAGS ("Beijing.Chaoyang", 2);
 * 更改标签值。有时因为需求、设备变更需要更改子表标签值：
 
 ```
-ALTER TABLE d1001 SET TAG  groupid = 1;
+ALTER TABLE d1001 SET TAG groupid = 1;
 ```
 
 * 查看超级表、子表结构。执行后可以看到子表继承了其超级表的结构：
