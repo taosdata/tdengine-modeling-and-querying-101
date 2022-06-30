@@ -22,10 +22,10 @@
 | d1002 | 1538548696650 | 10.3 | 218 | 0.25 | Beijing.Chaoyang	 | 3 |
 
 ## 建模语句
-* 建库。此处将创建一个名为 power 的库，这个库的数据将保留 365 天（超过 365 天将被自动删除），每 10 天一个数据文件，内存块数为 6，允许更新数据，缓存最新一条记录：
+* 建库。此处将创建一个名为 power 的库，这个库的数据将保留 3650 天（超过 3650 天将被自动删除），每 10 天一个数据文件，内存块数为 6，允许更新数据，缓存最新一条记录：
 
 ```
-CREATE DATABASE power KEEP 365 DAYS 10 BLOCKS 6 UPDATE 2 CACHELAST 1;
+CREATE DATABASE power KEEP 3650 DAYS 10 BLOCKS 6 UPDATE 2 CACHELAST 1;
 ```
 
 * 建超级表。与创建普通表类似，创建表时，需要提供表名（此处为 meters ）、数据列的定义。第一列必须为时间戳（此处为 ts ），其他列为采集的物理量，除此之外，还需要提供标签列的定义（此处为 location , groupId ）：
